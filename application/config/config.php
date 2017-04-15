@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = '127.0.0.1/edsa-Disc_Dur/M07_DWS_PHP/UF4/CI_RestServer/index.php/';
+$config['base_url'] = '';
 
 /*
 |--------------------------------------------------------------------------
