@@ -2,28 +2,42 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Welcome extends CI_Controller {
-
-    /**
-     * Index Page for this controller.
-     *
-     * Maps to the following URL
-     * 		http://example.com/index.php/welcome
-     *	- or -
-     * 		http://example.com/index.php/welcome/index
-     *	- or -
-     * Since this controller is set as the default controller in
-     * config/routes.php, it's displayed at http://example.com/
-     *
-     * So any other public methods not prefixed with an underscore will
-     * map to /index.php/welcome/<method_name>
-     * @see https://codeigniter.com/user_guide/general/urls.html
-     */
+    
     public function index() {
+        
+        if ($this->input->post('email') && $this->input->post('nom') && $this->input->post('telf')) {
+            $this->load->model('contacte');
+            
+            $registre['email'] = $this->input->post('email');
+            $registre['nom'] = $this->input->post('nom');
+            $registre['telf'] = $this->input->post('telf');
+            
+            $this->contacte->insertar($registre);
+        }
+        
         $data['vista'] = 'home';
+        $this->load->view('template', $data);
+    }
+    
+    public function registre() {
+        if ($this->input->post('email') && $this->input->post('pass')) {
+            $registre['email'] = $this->input->post('email');
+            $registre['pass'] = md5($this->input->post('pass'));
+            $registre['nom'] = $this->input->post('nom');
+            $registre['cif'] = $this->input->post('cif');
+            $registre['municipi'] = $this->input->post('municipi');
+            $registre['clau'] = md5(time()+rand());
+            
+            var_dump($registre);
+            
+            $this->load->model('client');
+            $this->client->insertar($registre);
+        }
+        
+        $data['vista'] = 'registre';
         $this->load->view('template', $data);
     }
     
     
     
-
 }
