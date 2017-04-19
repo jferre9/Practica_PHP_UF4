@@ -22,7 +22,6 @@ class Admin extends CI_Controller {
         }
 
         if ($this->session->admin) {
-
             if ($this->input->post('enviar')) {
                 
                 $registre['nom'] = $this->input->post('nom');
@@ -30,8 +29,8 @@ class Admin extends CI_Controller {
                 $registre['lat'] = $this->input->post('lat');
                 $registre['lon'] = $this->input->post('lon');
                 
-
-                $config['upload_path'] = './public/imatges/';
+                
+                $config['upload_path'] = './public/imatges/productors/';
                 $config['allowed_types'] = 'gif|jpg|png';
                 $config['max_size'] = 1024;
                 $config['file_name'] = uniqid();
@@ -41,7 +40,7 @@ class Admin extends CI_Controller {
                 //perque funcioni aquesta llibreria s'ha d'activar l'extensió php_fileinfo al php.ini
 
                 if (!$this->upload->do_upload('imatge')) {
-                    $data['error'] = array('error' => $this->upload->display_errors());
+                    $data['error'] = $this->upload->display_errors();
                 } else {
                     $registre['imatge'] = $this->upload->data('file_name');
                     
@@ -61,10 +60,16 @@ class Admin extends CI_Controller {
         }
     }
 
-    public function productor($nom) {
+    /* Veure llista de productes
+     * Afegir-los
+     * Link a modificar o 
+    */
+    public function productor($id) {
         if (!$this->session->admin) {
             redirect('admin');
         }
     }
+    
+    
 
 }

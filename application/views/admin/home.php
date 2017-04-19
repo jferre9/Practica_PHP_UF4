@@ -1,9 +1,28 @@
 <div class="container">
-
+    
+    <h2>Productors</h2>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Imatge</th>
+                <th>Nom</th>
+                <th>Denominació d'origen</th>
+                <th>Modificar</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($productor as $p): ?>
+            <tr>
+                <td><img src="<?php echo site_url()."/imatges/productors/".$p->imatge ?>"></td>
+            </tr>
+            <?php endforeach;?>
+        </tbody>
+    </table>
     <h2>Afegir productor</h2>
     <?php if (isset($error)): ?>
         <div class="error">
-            <?php foreach ($error as $e) echo $e; ?>
+            <?php echo $error; ?>
         </div>
     <?php endif; ?>
     <form class="form-horizontal" method="post" enctype="multipart/form-data">
