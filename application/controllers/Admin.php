@@ -9,7 +9,7 @@ class Admin extends CI_Controller {
 
         $this->load->model('productor');
         $this->load->model('contacte');
-//        $this->load->model('producte')
+        $this->load->model('producte');
     }
 
     public function index() {
@@ -23,13 +23,13 @@ class Admin extends CI_Controller {
 
         if ($this->session->admin) {
             if ($this->input->post('enviar')) {
-                
+
                 $registre['nom'] = $this->input->post('nom');
                 $registre['do'] = $this->input->post('do');
                 $registre['lat'] = $this->input->post('lat');
                 $registre['lon'] = $this->input->post('lon');
-                
-                
+
+
                 $config['upload_path'] = './public/imatges/productors/';
                 $config['allowed_types'] = 'gif|jpg|png';
                 $config['max_size'] = 1024;
@@ -43,7 +43,7 @@ class Admin extends CI_Controller {
                     $data['error'] = $this->upload->display_errors();
                 } else {
                     $registre['imatge'] = $this->upload->data('file_name');
-                    
+
                     $this->productor->insertar($registre);
                 }
             }
@@ -63,13 +63,29 @@ class Admin extends CI_Controller {
     /* Veure llista de productes
      * Afegir-los
      * Link a modificar o 
-    */
+     */
+
     public function productor($id) {
         if (!$this->session->admin) {
             redirect('admin');
         }
+        $productor = $this->productor->get($id);
+        if (!$productor) {
+            redirect('admin');
+        }
+        $productes = $this->productes->llista_productor($id);
+        
     }
-    
-    
+
+    public function eliminar_productor($id) {
+        if (!$this->session->admin) {
+            redirect('admin');
+        }
+        $productor = $this->productor->get($id);
+        if ($productor) {
+            $this->productor->eliminar($id);
+        }
+        redirect('admin');
+    }
 
 }

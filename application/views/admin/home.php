@@ -1,7 +1,7 @@
 <div class="container">
     
     <h2>Productors</h2>
-    <table class="table table-hover">
+    <table class="table table-hover taula-productors">
         <thead>
             <tr>
                 <th>Imatge</th>
@@ -12,9 +12,13 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($productor as $p): ?>
+            <?php foreach ($productors as $p): //var_dump($p);?>
             <tr>
-                <td><img src="<?php echo site_url()."/imatges/productors/".$p->imatge ?>"></td>
+                <td><img src="<?php echo base_url("/public/imatges/productors/".$p["imatge"]) ?>"></td>
+                <td><?php echo $p["nom"] ?></td>
+                <td><?php echo $p["do"] ?></td>
+                <td><a class="btn btn-info" href="<?php echo site_url("admin/productor/".$p["id"]."/".  url_title($p["nom"]));  ?>">Modificar</a></td>
+                <td><a class="btn btn-danger" href="<?php echo site_url("admin/eliminar-productor/".$p["id"]."/".  url_title($p["nom"]));  ?>">Eliminar</a></td>
             </tr>
             <?php endforeach;?>
         </tbody>
@@ -61,7 +65,5 @@
                 <input type="submit" name="enviar" value="Enviar" class="btn btn-info">
             </div>
         </div>
-
-
     </form>
 </div>
