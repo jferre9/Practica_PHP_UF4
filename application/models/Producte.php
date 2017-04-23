@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Productor extends CI_Model {
+class Producte extends CI_Model {
 
     public function __construct() {
         parent::__construct();
@@ -28,5 +28,7 @@ class Productor extends CI_Model {
         $query = $this->db->get('producte');
         return $query->result_array();
     }
+    
+    
 
 }

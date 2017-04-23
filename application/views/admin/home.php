@@ -37,21 +37,21 @@
             </div>
         </div>
         <div class="form-group">
+            <label class="control-label col-sm-2" for="email">Email:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="email" id="email">
+            </div>
+        </div>
+        <div class="form-group">
             <label class="control-label col-sm-2" for="do">Denominació d'orígen:</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" name="do" id="do">
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="lat">Latitud:</label>
+            <label class="control-label col-sm-2" for="direccio">Direccio:</label>
             <div class="col-sm-10">
-                <input type="number" max="85" min="-85" step="any" class="form-control" name="lat" id="lat">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="lon">Longitud:</label>
-            <div class="col-sm-10">
-                <input type="number" max="180" min="-180" step="any" class="form-control" name="lon" id="lon">
+                <input type="text"  class="form-control" name="direccio" id="direccio">
             </div>
         </div>
         <div class="form-group">

@@ -26,8 +26,8 @@ class Admin extends CI_Controller {
 
                 $registre['nom'] = $this->input->post('nom');
                 $registre['do'] = $this->input->post('do');
-                $registre['lat'] = $this->input->post('lat');
-                $registre['lon'] = $this->input->post('lon');
+                $registre['direccio'] = $this->input->post('direccio');
+                $registre['email'] = $this->input->post('email');
 
 
                 $config['upload_path'] = './public/imatges/productors/';
@@ -73,8 +73,46 @@ class Admin extends CI_Controller {
         if (!$productor) {
             redirect('admin');
         }
-        $productes = $this->productes->llista_productor($id);
-        
+
+        if ($this->input->post('enviar')) {
+            $registre['nom'] = $this->input->post('nom');
+            $registre['descripcio'] = $this->input->post('descripcio');
+            $registre['preu'] = $this->input->post('preu');
+            $registre['preu_final'] = $this->input->post('preu_final');
+            $registre['productor_id'] = $id;
+
+            $config['upload_path'] = './public/imatges/productes/';
+            $config['allowed_types'] = 'gif|jpg|png';
+            $config['max_size'] = 1024;
+            $config['file_name'] = uniqid();
+
+            $this->load->library('upload', $config);
+
+            //perque funcioni aquesta llibreria s'ha d'activar l'extensió php_fileinfo al php.ini
+
+            if (!$this->upload->do_upload('imatge')) {
+                $data['error'] = $this->upload->display_errors();
+                var_dump($data['error']);
+            } else {
+                $registre['imatge'] = $this->upload->data('file_name');
+
+                $this->producte->insertar($registre);
+            }
+        }
+
+
+
+
+
+        $productes = $this->producte->llista_productor($id);
+
+        $data['productor'] = $productor;
+        $data['productes'] = $productes;
+
+        var_dump($productor);
+
+        $data['vista'] = 'admin/productor';
+        $this->load->view('admin/template', $data);
     }
 
     public function eliminar_productor($id) {
