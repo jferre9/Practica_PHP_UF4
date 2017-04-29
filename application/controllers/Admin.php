@@ -8,7 +8,6 @@ class Admin extends CI_Controller {
         parent::__construct();
 
         $this->load->model('productor');
-        $this->load->model('contacte');
         $this->load->model('producte');
     }
 
@@ -22,6 +21,7 @@ class Admin extends CI_Controller {
         }
 
         if ($this->session->admin) {
+            //TODO Borrar
             if ($this->input->post('enviar')) {
 
                 $registre['nom'] = $this->input->post('nom');
