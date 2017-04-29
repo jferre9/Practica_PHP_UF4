@@ -9,6 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<link href="<?php echo base_url('public/estils/css/bootstrap.min.css') ?>" rel="stylesheet">
         <link rel="stylesheet" href="<?php echo base_url('public/estils/css/font-awesome.min.css') ?>">
         <link rel="stylesheet" href="<?php echo base_url('public/estils/estil.css') ?>">
+        <script src="http://maps.google.com/maps/api/js?sensor=true&key=AIzaSyCZPkegXzyFwgTb83GmaCKgzImVDSF1SUE" type="text/javascript"></script>
 </head>
 <body>
     <nav class="navbar navbar-static-top navbar-inverse" role="navigation">

@@ -11,7 +11,11 @@ class Productor extends CI_Model {
         $res = $this->db->insert('productor',$registre);
     }
     
-    public function getAll() {
+    public function getAll($where = FALSE) {
+        if ($where) {
+            $this->db->where($where);
+            echo "qweqweqwe";
+        }
         return $this->db->get('productor')->result_array();
     }
     
