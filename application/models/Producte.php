@@ -29,6 +29,11 @@ class Producte extends CI_Model {
         return $query->result_array();
     }
     
+    public function llista_webservice($key) {
+        $this->db->select('p.nom,p.preu,p.preu_final,r.nom as productor');
+        $this->db->from('productor p');
+    }
+    
     
 
 }
