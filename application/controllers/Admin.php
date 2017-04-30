@@ -109,7 +109,7 @@ class Admin extends CI_Controller {
         $data['productor'] = $productor;
         $data['productes'] = $productes;
 
-        var_dump($productor);
+        
 
         $data['vista'] = 'admin/productor';
         $this->load->view('admin/template', $data);

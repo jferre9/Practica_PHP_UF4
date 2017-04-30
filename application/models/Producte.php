@@ -19,7 +19,7 @@ class Producte extends CI_Model {
         $this->db->select('*');
         $this->db->where('id', $id);
         $query = $this->db->get('producte');
-        return $query->first_row();
+        return $query->first_row('array');
     }
     
     public function llista_productor($id) {
@@ -29,9 +29,12 @@ class Producte extends CI_Model {
         return $query->result_array();
     }
     
-    public function llista_webservice($key) {
-        $this->db->select('p.nom,p.preu,p.preu_final,r.nom as productor');
-        $this->db->from('productor p');
+    public function llista_detalls() {
+        $this->db->select('producte.id,producte.nom,producte.descripcio,producte.preu,producte.preu_final,producte.imatge,productor.nom as productor','productor.do');
+        $this->db->from('producte');
+        $this->db->join('productor','producte.productor_id = productor.id');
+        $query = $this->db->get();
+        return $query->result_array();
     }
     
     

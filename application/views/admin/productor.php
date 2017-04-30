@@ -60,7 +60,7 @@
             </div>
         </div>
     </div>
-    <table class="table table-hover">
+    <table class="table table-hover taula-productes">
         <thead>
             <tr>
                 <th>Imatge</th>
@@ -74,11 +74,11 @@
         <tbody>
             <?php foreach ($productes as $p): ?>
                 <tr>
-                    <td><img src='<?php echo base_url("public/imatges/productes/" . $p["imatge"]) ?>'></td>
+                    <td><img src='<?php echo site_url("public/imatges/productes/" . $p["imatge"]) ?>'></td>
                     <td><?php echo $p["nom"] ?></td>
                     <td><?php echo $p["preu"] ?> €</td>
                     <td><?php echo $p["preu_final"] ?> €</td>
-                    <td><a class="btn btn-info" href="<?php echo base_url('admin/modificar_producte/'.$p["id"]) ?>">Modificar</a></td>
+                    <td><a class="btn btn-info" href="<?php echo base_url('admin/modificar_producte/'.$p["id"]."/".  url_title($p['nom'])) ?>">Modificar</a></td>
                     <td><a class="btn btn-danger" href="<?php echo base_url('admin/eliminar_producte/'.$p["id"]) ?>">Eliminar</a></td>
                 </tr>
             <?php endforeach; ?>
