@@ -1,11 +1,24 @@
 <?php
 
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+//http://html2pdf.fr/es/example
 class Comanda extends CI_Model {
 
     public function __construct() {
         parent::__construct();
+    }
+    
+    public function llista($finalitzada) {
+        $this->db->select('client.nom as client,comanda.*');
+        $this->db->from('comanda');
+        $this->db->join('client','client.id = comanda.client_id');
+        if ($finalitzada) {
+            $this->db->where('comanda.finalitzada','1');
+        } else {
+            $this->db->where('comanda.finalitzada','0');
+        }
+        $query = $this->db->get();
+        return $query->result_array();
     }
 
     public function inserir($carro, $client_id) {
@@ -37,6 +50,19 @@ class Comanda extends CI_Model {
             echo "Error " . $ex->getMessage() . "<br>";
             return FALSE;
         }
+    }
+    
+    public function webservice($key) {
+        $return = array();
+        
+        $this->db->select('comanda.*');
+        $this->db->from('comanda');
+        $this->db->join('client','client.id = comanda.client_id');
+        $this->db->where(array('client.clau'=>$key));
+        $query = $this->db->get();
+        
+        $comandesFinalitzades = array();
+        
     }
 
 }

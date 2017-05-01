@@ -1,15 +1,14 @@
 <div class="container">
-    <h1>Home</h1>
-    
-    <?php mapa_punts($posicions) ?>
-    
-    
-    <h2>Vols treballar amb nosaltres?</h2>
     <?php if (isset($error)): ?>
         <div class="alert alert-danger">
             <?php echo $error; ?>
         </div>
     <?php endif; ?>
+    <h1>Els nostres productors</h1>
+    
+    <?php mapa_punts($posicions) ?>
+    
+    <h2>Vols treballar amb nosaltres?</h2>
     <form class="form-horizontal" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label class="control-label col-sm-2" for="nom">Nom:</label>

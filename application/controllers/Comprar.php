@@ -60,6 +60,10 @@ class Comprar extends CI_Controller {
         $this->comanda->inserir($this->session->carro,1);
     }
     
+    public function prova() {
+        $this->load->view('prova');
+    }
+    
     
 
 

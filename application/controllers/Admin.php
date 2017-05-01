@@ -9,6 +9,8 @@ class Admin extends CI_Controller {
 
         $this->load->model('productor');
         $this->load->model('producte');
+        $this->load->model('comanda');
+        $this->load->model('client');
     }
 
     public function index() {
@@ -124,6 +126,36 @@ class Admin extends CI_Controller {
             $this->productor->eliminar($id);
         }
         redirect('admin');
+    }
+    
+    public function comandes() {
+        
+        $data['comandesPendents'] = $this->comanda->llista(FALSE);
+        $data['comandesFinalitzades'] = $this->comanda->llista(TRUE);
+        $data['vista'] = 'admin/comandes';
+        $this->load->view('admin/template', $data);
+    }
+    
+    public function finalitzar($id) {
+        $this->comanda->fintalitzar($id);
+    }
+    
+    public function ruta() {
+        if (!$this->input->post('ruta')) redirect('admin/comandes');
+        
+        $this->load->helper('google_maps');
+        
+        $clients = array_keys($this->input->post('ruta'));
+        
+        $waypoints = $this->client->getMunicipis($clients);
+        
+        $data['inici'] = 'Igualada';
+        $data['final'] = 'Igualada';
+        $data['waypoints'] = $waypoints;
+        $data['vista'] = 'admin/ruta';
+        $this->load->view('admin/template',$data);
+        
+        
     }
 
 }

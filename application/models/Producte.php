@@ -30,7 +30,7 @@ class Producte extends CI_Model {
     }
     
     public function llista_detalls() {
-        $this->db->select('producte.id,producte.nom,producte.descripcio,producte.preu,producte.preu_final,producte.imatge,productor.nom as productor','productor.do');
+        $this->db->select('producte.*,productor.nom as productor','productor.do');
         $this->db->from('producte');
         $this->db->join('productor','producte.productor_id = productor.id');
         $query = $this->db->get();
