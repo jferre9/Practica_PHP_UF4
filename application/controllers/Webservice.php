@@ -8,7 +8,7 @@ class Webservice extends CI_Controller {
     public function __construct() {
         parent::__construct();
 
-        $this->load->model('productor');
+        $this->load->model('producte');
         $this->load->model('client');
         $this->load->model('comanda');
         
@@ -25,12 +25,13 @@ class Webservice extends CI_Controller {
     
     
     public function comandes() {
-        
-        
+        $resposta = array('status'=>'ok','comandes'=> $this->comanda->webservice($this->input->get('key')));
+        echo json_encode($resposta);
     }
     
     public function productes() {
-        
+        $resposta = array('status'=>'ok','comandes'=> $this->producte->llista_detalls());
+        echo json_encode($resposta);
     }
 
 }

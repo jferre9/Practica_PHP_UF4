@@ -53,7 +53,7 @@ class Admin extends CI_Controller {
 
 
 
-            $data['productors'] = $this->productor->getAll();
+            $data['productors'] = $this->productor->getAll(array('actiu'=>'1','eliminat'=>0));
 
             $data['vista'] = 'admin/home';
             $this->load->view('template', $data); //file_name
@@ -136,6 +136,18 @@ class Admin extends CI_Controller {
         $this->load->view('admin/template', $data);
     }
     
+    public function nous_productors() {
+        $data['productors'] = $this->productor->getAll(array('actiu'=>0,'eliminat'=>0));
+        
+        $data['vista'] = 'admin/nous_productors';
+        $this->load->view('admin/template', $data);
+    }
+    
+    public function acceptar_productor($id) {
+        $this->productor->acceptar($id);
+        redirect('admin/nous_productors');
+    }
+    
     public function finalitzar($id) {
         $this->comanda->fintalitzar($id);
     }
@@ -154,8 +166,6 @@ class Admin extends CI_Controller {
         $data['waypoints'] = $waypoints;
         $data['vista'] = 'admin/ruta';
         $this->load->view('admin/template',$data);
-        
-        
     }
 
 }

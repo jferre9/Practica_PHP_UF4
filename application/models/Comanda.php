@@ -53,16 +53,59 @@ class Comanda extends CI_Model {
     }
     
     public function webservice($key) {
-        $return = array();
         
         $this->db->select('comanda.*');
         $this->db->from('comanda');
         $this->db->join('client','client.id = comanda.client_id');
-        $this->db->where(array('client.clau'=>$key));
+        $this->db->where(array('client.clau'=>$key,'finalitzada'=> '1'));
         $query = $this->db->get();
         
+        
+        
         $comandesFinalitzades = array();
+        foreach ($query->result_array() as $c) {
+            $comanda = array('data'=> $c['data'],'preu'=>$c['preu_total']);
+            $this->db->select('producte.nom,detall.quantitat,detall.preu');
+            $this->db->from('detall');
+            $this->db->join('comanda','comanda.id = detall.comanda_id');
+            $this->db->join('producte','producte.id = detall.producte_id');
+            $this->db->where(array('comanda.id'=>$c['id']));
+            $consulta = $this->db->get();
+            
+            $comanda['detalls'] = $consulta->result_array();
+            $comandesFinalitzades[] = $comanda;
+        }
+        
+        /*********************************************************/
+        
+        $this->db->select('comanda.*');
+        $this->db->from('comanda');
+        $this->db->join('client','client.id = comanda.client_id');
+        $this->db->where(array('client.clau'=>$key,'finalitzada'=> '0'));
+        $query = $this->db->get();
+        
+        
+        
+        $comandesPendents = array();
+        foreach ($query->result_array() as $c) {
+            $comanda = array('data'=> $c['data'],'preu'=>$c['preu_total']);
+            $this->db->select('producte.nom,detall.quantitat,detall.preu');
+            $this->db->from('detall');
+            $this->db->join('comanda','comanda.id = detall.comanda_id');
+            $this->db->join('producte','producte.id = detall.producte_id');
+            $this->db->where(array('comanda.id'=>$c['id']));
+            $consulta = $this->db->get();
+            
+            $comanda['detalls'] = $consulta->result_array();
+            $comandesPendents[] = $comanda;
+        }
+        
+        return array('finalitzades'=>$comandesFinalitzades,'pendents'=>$comandesPendents);
+        
         
     }
+    
+    
+
 
 }

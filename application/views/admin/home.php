@@ -18,7 +18,7 @@
                 <td><?php echo $p["nom"] ?></td>
                 <td><?php echo $p["do"] ?></td>
                 <td><a class="btn btn-info" href="<?php echo site_url("admin/productor/".$p["id"]."/".  url_title($p["nom"]));  ?>">Modificar</a></td>
-                <td><a class="btn btn-danger" href="<?php echo site_url("admin/eliminar-productor/".$p["id"]."/".  url_title($p["nom"]));  ?>">Eliminar</a></td>
+                <td><a class="btn btn-danger" href="<?php echo site_url("admin/eliminar_productor/".$p["id"]."/".  url_title($p["nom"]));  ?>">Eliminar</a></td>
             </tr>
             <?php endforeach;?>
         </tbody>

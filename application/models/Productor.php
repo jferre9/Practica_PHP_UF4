@@ -31,6 +31,13 @@ class Productor extends CI_Model {
         $this->db->update('productor');
     }
     
+    public function acceptar($id) {
+        $this->update($id, array('actiu'=>'1'));
+    }
+    
+    public function eliminar($id) {
+        $this->update($id, array('eliminat'=>'1'));
+    }
     
 
 }
