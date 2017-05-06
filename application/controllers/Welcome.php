@@ -269,12 +269,9 @@ class Welcome extends CI_Controller {
         redirect('welcome');
     }
 
-    public function cartahtml() {
-        $data['productes'] = $this->producte->llista_detalls();
-        $this->load->view('carta_vins',$data);
-    }
+    
 
-    public function cartapdf() {
+    public function carta() {
 
         $data['productes'] = $this->producte->llista_detalls();
         $content = $this->load->view('carta_vins', $data, TRUE);

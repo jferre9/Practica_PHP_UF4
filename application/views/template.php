@@ -38,8 +38,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <li><a href="<?php echo site_url('webservice/productes')."?key=".$this->session->usuari["clau"] ?>">Productes</a></li>
                         </ul>
                     </li>
-                    <li><a href="<?php echo site_url('admin') ?>">Administració</a></li>
                     <?php endif; ?>
+                    <li><a href="<?php echo site_url('admin') ?>">Administració</a></li>
+                    <li><a href="<?php echo site_url('welcome/carta') ?>">Carta de vins</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
