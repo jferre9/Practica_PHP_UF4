@@ -22,13 +22,14 @@
                     </div>
                 </td>
                 <td data-th="Price"><?php echo $p['preu'] ?> €</td>
-                <td data-th="Quantity">
-                    <input type="number" class="form-control text-center" value="<?php echo $p['quantitat'] ?>">
+                <td data-th="Quantity" class="text-center">
+                    <!--input type="number" class="form-control text-center" value="<?php echo $p['quantitat'] ?>"-->
+                    <?php echo $p['quantitat'] ?>
                 </td>
                 <td data-th="Subtotal" class="text-center"><?php echo ($p['quantitat']*$p['preu']) ?> €</td>
                 <td class="actions" data-th="">
-                    <button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
-                    <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>								
+                    <!--a href="<?php echo site_url('comprar/borrar_carro/'.$p['id']) ?>" class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></a-->
+                    <a href="<?php echo site_url('comprar/borrar_carro/'.$p['id']) ?>" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>								
                 </td>
             </tr>
             <?php endforeach; ?>

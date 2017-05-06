@@ -30,7 +30,7 @@ class Webservice extends CI_Controller {
     }
     
     public function productes() {
-        $resposta = array('status'=>'ok','comandes'=> $this->producte->llista_detalls());
+        $resposta = array('status'=>'ok','productes'=> $this->producte->llista_detalls());
         echo json_encode($resposta);
     }
 

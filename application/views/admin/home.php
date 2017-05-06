@@ -7,7 +7,8 @@
                 <th>Imatge</th>
                 <th>Nom</th>
                 <th>Denominació d'origen</th>
-                <th>Modificar</th>
+                <th>Veure</th>
+                <th>Editar</th>
                 <th>Eliminar</th>
             </tr>
         </thead>
@@ -17,7 +18,8 @@
                 <td><img src="<?php echo base_url("/public/imatges/productors/".$p["imatge"]) ?>"></td>
                 <td><?php echo $p["nom"] ?></td>
                 <td><?php echo $p["do"] ?></td>
-                <td><a class="btn btn-info" href="<?php echo site_url("admin/productor/".$p["id"]."/".  url_title($p["nom"]));  ?>">Modificar</a></td>
+                <td><a class="btn btn-info" href="<?php echo site_url("admin/productor/".$p["id"]."/".  url_title($p["nom"]));  ?>">Veure</a></td>
+                <td><a class="btn btn-info" href="<?php echo site_url("admin/editar_productor/".$p["id"]."/".  url_title($p["nom"]));  ?>">Editar</a></td>
                 <td><a class="btn btn-danger" href="<?php echo site_url("admin/eliminar_productor/".$p["id"]."/".  url_title($p["nom"]));  ?>">Eliminar</a></td>
             </tr>
             <?php endforeach;?>

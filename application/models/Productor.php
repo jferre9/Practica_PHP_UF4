@@ -14,14 +14,13 @@ class Productor extends CI_Model {
     public function getAll($where = FALSE) {
         if ($where) {
             $this->db->where($where);
-            echo "qweqweqwe";
         }
         return $this->db->get('productor')->result_array();
     }
     
     public function get($id) {
         $this->db->select('*');
-        $this->db->where('id', $id);
+        $this->db->where(array('id'=> $id,'eliminat'=>false));
         $query = $this->db->get('productor');
         return $query->first_row('array');
     }
@@ -37,6 +36,9 @@ class Productor extends CI_Model {
     
     public function eliminar($id) {
         $this->update($id, array('eliminat'=>'1'));
+        $this->db->set('eliminat','1');
+        $this->db->where('productor_id',$id);
+        $this->db->update('producte');
     }
     
 

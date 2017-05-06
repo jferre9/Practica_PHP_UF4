@@ -9,6 +9,7 @@ class Comprar extends CI_Controller {
 
         $this->load->model('producte');
         $this->load->model('comanda');
+        if (!$this->session->usuari) redirect('welcome');
     }
 
     public function index() {
@@ -47,17 +48,38 @@ class Comprar extends CI_Controller {
         }
         $this->session->carro = $carro;
         
-        $data['total'] = 0;
+        $total = 0;
+        foreach ($carro as $p) {
+            $total += $p['quantitat']*$p['preu'];
+        }
+        
+        $data['total'] = $total;
         $data['carro'] = $carro;
         $data['vista'] = 'carro';
         $this->load->view('template', $data);
+    }
+    
+    public function borrar_carro($id) {
+        $carro = $this->session->carro;
+        if (!$carro) redirect ('comprar');
+        for ($i = 0; $i < count($carro); $i++) {
+            if ($carro[$i]['id'] === $id) {
+                array_splice($carro, $i,1);
+                break;
+            }
+        }
+        $this->session->carro = $carro;
+        redirect('comprar/carro');
     }
     
     public function checkout() {
         if (count($this->session->carro) === 0) {
             redirect('comprar');
         }
-        $this->comanda->inserir($this->session->carro,1);
+        $this->comanda->inserir($this->session->carro,$this->session->usuari['id']);
+        $this->session->carro = NULL;
+        $this->session->set_flashdata('missatge','Compra finalitzada');
+        redirect('comprar');
     }
     
     public function prova() {

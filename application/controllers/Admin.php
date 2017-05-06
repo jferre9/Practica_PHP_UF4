@@ -56,16 +56,11 @@ class Admin extends CI_Controller {
             $data['productors'] = $this->productor->getAll(array('actiu'=>'1','eliminat'=>0));
 
             $data['vista'] = 'admin/home';
-            $this->load->view('template', $data); //file_name
+            $this->load->view('admin/template', $data); //file_name
         } else {
             $this->load->view('admin/login');
         }
     }
-
-    /* Veure llista de productes
-     * Afegir-los
-     * Link a modificar o 
-     */
 
     public function productor($id) {
         if (!$this->session->admin) {
@@ -128,8 +123,25 @@ class Admin extends CI_Controller {
         redirect('admin');
     }
     
+    public function eliminar_producte($id) {
+        if (!$this->session->admin) {
+            redirect('admin');
+        }
+        $productor = $this->producte->get($id);
+        if ($productor) {
+            $this->producte->eliminar($id);
+        }
+        $productor = $this->input->get('productor');
+        if ($productor) {
+            redirect("admin/productor/$productor");
+        }
+        redirect('admin');
+    }
+    
     public function comandes() {
-        
+        if (!$this->session->admin) {
+            redirect('admin');
+        }
         $data['comandesPendents'] = $this->comanda->llista(FALSE);
         $data['comandesFinalitzades'] = $this->comanda->llista(TRUE);
         $data['vista'] = 'admin/comandes';
@@ -137,6 +149,9 @@ class Admin extends CI_Controller {
     }
     
     public function nous_productors() {
+        if (!$this->session->admin) {
+            redirect('admin');
+        }
         $data['productors'] = $this->productor->getAll(array('actiu'=>0,'eliminat'=>0));
         
         $data['vista'] = 'admin/nous_productors';
@@ -144,15 +159,87 @@ class Admin extends CI_Controller {
     }
     
     public function acceptar_productor($id) {
+        if (!$this->session->admin) {
+            redirect('admin');
+        }
         $this->productor->acceptar($id);
         redirect('admin/nous_productors');
     }
     
+    public function editar_productor($id) {
+        if (!$this->session->admin) {
+            redirect('admin');
+        }
+        $productor = $this->productor->get($id);
+        if (!$productor) {
+            redirect('admin');
+        }
+        
+        $this->load->helper('google_maps');
+        
+        
+        $data['productor'] = $productor;
+        
+        if ($this->input->post('enviar')) {
+
+            $registre['nom'] = $this->input->post('nom');
+            $registre['do'] = $this->input->post('do');
+            $registre['direccio'] = $this->input->post('direccio');
+            $registre['email'] = $this->input->post('email');
+
+            $coordenades = get_coordenades($registre['direccio']);
+
+            if (!$coordenades) {
+                $data['error'] = "Direcció no vàlida";
+            } else {
+                $registre['lat'] = $coordenades['lat'];
+                $registre['lng'] = $coordenades['lng'];
+                
+                $error = FALSE;
+                if ($this->input->post('imatge')) {
+
+                    $config['upload_path'] = './public/imatges/productors/';
+                    $config['allowed_types'] = 'gif|jpg|png';
+                    $config['max_size'] = 1024;
+                    $config['file_name'] = uniqid();
+
+                    $this->load->library('upload', $config);
+
+                    //perque funcioni aquesta llibreria s'ha d'activar l'extensió php_fileinfo al php.ini
+
+                    if (!$this->upload->do_upload('imatge')) {
+                        $data['error'] = $this->upload->display_errors();
+                        $error = TRUE;
+                    } else {
+                        $registre['imatge'] = $this->upload->data('file_name');
+
+                    }
+                }
+                if (!$error) {
+                    $this->productor->update($id,$registre);
+                    redirect('admin/productor/'.$productor['id']);
+                }
+            }
+        }
+        
+        
+        
+        
+        $data['vista'] = 'admin/editar_productor';
+        $this->load->view('admin/template',$data);
+    }
+    
     public function finalitzar($id) {
+        if (!$this->session->admin) {
+            redirect('admin');
+        }
         $this->comanda->fintalitzar($id);
     }
     
     public function ruta() {
+        if (!$this->session->admin) {
+            redirect('admin');
+        }
         if (!$this->input->post('ruta')) redirect('admin/comandes');
         
         $this->load->helper('google_maps');
@@ -168,4 +255,8 @@ class Admin extends CI_Controller {
         $this->load->view('admin/template',$data);
     }
 
+    public function logout() {
+        $this->session->admin = NULL;
+        redirect('welcome');
+    }
 }

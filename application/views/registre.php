@@ -1,4 +1,10 @@
 <div class="container">
+    <h1>Registre</h1>
+    <?php if (isset($error)): ?>
+        <div class="alert alert-danger">
+            <?php echo $error; ?>
+        </div>
+    <?php endif; ?>
     <form class="form-horizontal" method="post">
         <div class="form-group">
             <label class="control-label col-sm-2" for="email">Email:</label>
